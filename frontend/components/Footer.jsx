@@ -81,13 +81,15 @@ const Footer = () => {
         {/* RIGHT START */}
         <div className="flex justify-center gap-4 md:justify-start">
           <div
-            onClick={() => window.open("https://facebook.com", "_blank")}
+            onClick={() =>
+              window.open("https://www.facebook.com/mdraselmiah15", "_blank")
+            }
             className="w-10 h-10 rounded-full bg-white/[0.25] flex items-center justify-center text-black hover:bg-white/[0.5] cursor-pointer"
           >
             <FaFacebookF size={20} />
           </div>
           <Link
-            href="https://twitter.com"
+            href="https://twitter.com/raselmiah95"
             className="w-10 h-10 rounded-full bg-white/[0.25] flex items-center justify-center text-black hover:bg-white/[0.5] cursor-pointer"
           >
             <FaTwitter size={20} />
