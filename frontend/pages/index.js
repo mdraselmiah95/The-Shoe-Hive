@@ -7,3 +7,5 @@ export default function Home() {
     </>
   );
 }
+
+// video=> 00:33:00
