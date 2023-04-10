@@ -39,9 +39,12 @@ const MenuMobile = ({ showCatMenu, setShowCatMenu, setMobileMenu }) => {
                         <Link
                           key={submenu.id}
                           href="/"
-                          onClick={() => setShowCatMenu(false)}
+                          onClick={() => {
+                            setShowCatMenu(false);
+                            setMobileMenu(false);
+                          }}
                         >
-                          <li className="h-12 flex justify-between items-center px-3 hover:bg-black/[0.03] rounded-md">
+                          <li className="flex justify-between px-8 py-4 border-t">
                             {submenu.name}
                             <span className="text-sm opacity-50">52</span>
                           </li>
