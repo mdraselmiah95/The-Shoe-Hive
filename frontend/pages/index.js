@@ -32,6 +32,8 @@ export default function Home() {
             <ProductCard />
             <ProductCard />
           </div>
+
+          {/* products grid end */}
         </Wrapper>
       </main>
     </>
