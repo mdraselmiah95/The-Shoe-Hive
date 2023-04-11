@@ -3,6 +3,7 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import Wrapper from "@/components/Wrapper";
+import RelatedProducts from "@/components/RelatedProducts";
 
 const ProductDetails = () => {
   return (
@@ -113,6 +114,8 @@ const ProductDetails = () => {
           </div>
           {/* right column end */}
         </div>
+
+        <RelatedProducts />
       </Wrapper>
     </div>
   );
