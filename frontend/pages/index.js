@@ -1,4 +1,5 @@
 import HeroBanner from "@/components/HeroBanner";
+import ProductCard from "@/components/ProductCard";
 import Wrapper from "@/components/Wrapper";
 
 export default function Home() {
@@ -19,6 +20,18 @@ export default function Home() {
             </div>
           </div>
           {/* heading and paragraph end */}
+
+          {/* products grid start */}
+
+          <div className="grid grid-cols-1 gap-5 px-5 md:grid-cols-2 lg:grid-cols-3 my-14 md:px-0">
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+          </div>
         </Wrapper>
       </main>
     </>
