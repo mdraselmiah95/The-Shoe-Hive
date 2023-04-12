@@ -24,6 +24,10 @@ const Cart = () => {
               <div className="text-lg font-bold">Cart Items</div>
 
               <CartItem />
+              <CartItem />
+              <CartItem />
+              <CartItem />
+              <CartItem />
             </div>
             {/* CART ITEMS END */}
 

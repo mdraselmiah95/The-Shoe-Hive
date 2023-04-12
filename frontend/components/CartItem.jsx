@@ -38,9 +38,57 @@ const CartItem = () => {
           <div className="flex items-center gap-2 md:gap-10 text-black/[0.5] text-sm md:text-md">
             <div className="flex items-center gap-1">
               <div className="font-semibold">Size:</div>
-              <select className="hover:text-black"></select>
+              <div className="relative">
+                <select className="py-2 pl-2 pr-8 text-base border border-gray-300 rounded appearance-none hover:text-black focus:outline-none focus:ring-2 focus:ring-neutral-200 focus:border-neutral-500">
+                  <option value="1">UK 6</option>
+                  <option value="2">UK 6.5</option>
+                  <option value="3">UK 7</option>
+                  <option value="4">UK 7.5</option>
+                  <option value="5">UK 8</option>
+                </select>
+                <span className="absolute top-0 right-0 flex items-center justify-center w-10 h-full text-center text-gray-600 pointer-events-none">
+                  <svg
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    className="w-4 h-4"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M6 9l6 6 6-6"></path>
+                  </svg>
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-1">
+              <div className="font-semibold">Quantity:</div>
+              <div className="relative">
+                <select className="py-2 pl-2 pr-8 text-base border border-gray-300 rounded appearance-none hover:text-black focus:outline-none focus:ring-2 focus:ring-neutral-200 focus:border-neutral-500">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+                <span className="absolute top-0 right-0 flex items-center justify-center w-10 h-full text-center text-gray-600 pointer-events-none">
+                  <svg
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    className="w-4 h-4"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M6 9l6 6 6-6"></path>
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
+          <RiDeleteBin6Line className="cursor-pointer text-black/[0.5] hover:text-black text-[16px] md:text-[20px]" />
         </div>
       </div>
     </div>
