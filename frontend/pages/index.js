@@ -40,4 +40,4 @@ export default function Home() {
   );
 }
 
-// video=> 01:51:00
+// video 2nd Part=> 01:51:00
