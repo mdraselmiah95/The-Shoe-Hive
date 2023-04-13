@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
@@ -11,6 +11,10 @@ const maxResult = 3;
 const Category = ({ category, products, slug }) => {
   const [pageIndex, setPageIndex] = useState(1);
   const { query } = useRouter();
+
+  useEffect(() => {
+    setPageIndex(1);
+  }, [query]);
 
   const { data, error, isLoading } = useSWR(
     `/api/products?populate=*&[filters][categories][slug][$eq]=${slug}&pagination[page]=${pageIndex}&pagination[pageSize]=${maxResult}`,
@@ -30,15 +34,13 @@ const Category = ({ category, products, slug }) => {
         </div>
 
         {/* products grid start */}
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <div className="grid grid-cols-1 gap-5 px-5 md:grid-cols-2 lg:grid-cols-3 my-14 md:px-0">
-            {data?.data?.map((product) => (
-              <ProductCard key={product?.id} data={product} />
-            ))}
-          </div>
-        )}
+
+        <div className="grid grid-cols-1 gap-5 px-5 md:grid-cols-2 lg:grid-cols-3 my-14 md:px-0">
+          {data?.data?.map((product) => (
+            <ProductCard key={product?.id} data={product} />
+          ))}
+        </div>
+
         {/* products grid end */}
 
         {/* PAGINATION BUTTONS START */}
@@ -66,6 +68,13 @@ const Category = ({ category, products, slug }) => {
           </div>
         )}
         {/* PAGINATION BUTTONS END */}
+
+        {isLoading && (
+          <div className="absolute top-0 left-0 w-full h-full bg-white/[0.5] flex flex-col gap-5 justify-center items-center">
+            <img src="/logo.svg" width={150} />
+            <Loader />
+          </div>
+        )}
       </Wrapper>
     </div>
   );
