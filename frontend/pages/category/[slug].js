@@ -1,5 +1,6 @@
 import ProductCard from "@/components/ProductCard";
 import Wrapper from "@/components/Wrapper";
+import { fetchDataFromApi } from "@/utils/api";
 import React from "react";
 
 const Category = () => {
@@ -31,3 +32,28 @@ const Category = () => {
 };
 
 export default Category;
+
+export async function getStaticPaths() {
+  const category = await fetchDataFromApi("/api/categories?populate=*");
+  const paths = category.data.map((c) => ({
+    params: {
+      slug: c.attributes.slug,
+    },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+}
+
+export async function getStaticProps({ params: { slug } }) {
+  const category = await fetchDataFromApi(
+    `/api/categories?filters[slug][$eq]=${slug}`
+  );
+  return {
+    props: {
+      category,
+    },
+  };
+}
