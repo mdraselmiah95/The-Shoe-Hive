@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
 import HeroBanner from "@/components/HeroBanner";
+import Loader from "@/components/Loader";
 import ProductCard from "@/components/ProductCard";
 import Wrapper from "@/components/Wrapper";
 import { fetchDataFromApi } from "@/utils/api";
 
 export default function Home({ products }) {
-  console.log(products);
   return (
     <>
       <main>
@@ -26,11 +25,15 @@ export default function Home({ products }) {
 
           {/* products grid start */}
 
-          <div className="grid grid-cols-1 gap-5 px-5 md:grid-cols-2 lg:grid-cols-3 my-14 md:px-0">
-            {products?.data?.map((product) => (
-              <ProductCard key={product?.id} data={product} />
-            ))}
-          </div>
+          {!products.data ? (
+            <Loader />
+          ) : (
+            <div className="grid grid-cols-1 gap-5 px-5 md:grid-cols-2 lg:grid-cols-3 my-14 md:px-0">
+              {products?.data?.map((product) => (
+                <ProductCard key={product?.id} data={product} />
+              ))}
+            </div>
+          )}
 
           {/* products grid end */}
         </Wrapper>
