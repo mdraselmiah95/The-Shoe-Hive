@@ -4,6 +4,7 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import Wrapper from "@/components/Wrapper";
 import RelatedProducts from "@/components/RelatedProducts";
+import { fetchDataFromApi } from "@/utils/api";
 
 const ProductDetails = () => {
   return (
@@ -115,10 +116,40 @@ const ProductDetails = () => {
           {/* right column end */}
         </div>
 
-        <RelatedProducts />
+        {/* <RelatedProducts /> */}
       </Wrapper>
     </div>
   );
 };
 
 export default ProductDetails;
+
+export async function getStaticPaths() {
+  const products = await fetchDataFromApi("/api/products?populate=*");
+  const paths = products?.data?.map((p) => ({
+    params: {
+      slug: p.attributes.slug,
+    },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+}
+
+export async function getStaticProps({ params: { slug } }) {
+  const product = await fetchDataFromApi(
+    `/api/products?populate=*&filters[slug][$eq]=${slug}`
+  );
+  const products = await fetchDataFromApi(
+    `/api/products?populate=*&[filters][slug][$ne]=${slug}`
+  );
+
+  return {
+    props: {
+      product,
+      products,
+    },
+  };
+}

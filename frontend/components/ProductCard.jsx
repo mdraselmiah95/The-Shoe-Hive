@@ -6,7 +6,7 @@ import React from "react";
 const ProductCard = ({ data: { attributes: p, id } }) => {
   return (
     <Link
-      href={`/products/${p.slug}`}
+      href={`/product/${p.slug}`}
       className="overflow-hidden duration-200 transform bg-white cursor-pointer hover:scale-105"
     >
       <Image
