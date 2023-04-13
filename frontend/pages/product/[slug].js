@@ -1,19 +1,23 @@
 import ProductDetailsCarousel from "@/components/ProductDetailsCarousel";
 import { IoMdHeartEmpty } from "react-icons/io";
-import React from "react";
+import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import Wrapper from "@/components/Wrapper";
 import RelatedProducts from "@/components/RelatedProducts";
 import { fetchDataFromApi } from "@/utils/api";
 
-const ProductDetails = () => {
+const ProductDetails = ({ product, products }) => {
+  const [selectedSize, setSelectedSize] = useState();
+  const [showError, setShowError] = useState(false);
+  const p = product?.data?.[0]?.attributes;
+  console.log(product);
   return (
     <div className="w-full md:py-20">
       <Wrapper>
         <div className="flex flex-col lg:flex-row md:px-10 gap-[50px] lg:gap-[100px]">
           {/* left column start */}
           <div className="w-full md:w-auto flex-[1.5] max-w-[500px] lg:max-w-full mx-auto lg:mx-0">
-            <ProductDetailsCarousel />
+            <ProductDetailsCarousel images={p.image.data} />
           </div>
           {/* left column end */}
 
@@ -21,15 +25,17 @@ const ProductDetails = () => {
           <div className="flex-[1] py-3">
             {/* PRODUCT TITLE */}
             <div className="text-[34px] font-semibold mb-2 leading-tight">
-              name
+              {p.name}
             </div>
 
             {/* PRODUCT SUBTITLE */}
-            <div className="mb-5 text-lg font-semibold">subtitle</div>
+            <div className="mb-5 text-lg font-semibold">{p.subtitle}</div>
 
             {/* PRODUCT PRICE */}
             <div className="flex items-center">
-              <p className="mr-2 text-lg font-semibold">MRP : &#2547;13400</p>
+              <p className="mr-2 text-lg font-semibold">
+                MRP : &#2547;{p.price}
+              </p>
             </div>
             <div className="text-md font-medium text-black/[0.5]">
               incl. of taxes
@@ -97,26 +103,14 @@ const ProductDetails = () => {
             <div>
               <div className="mb-5 text-lg font-bold">Product Details</div>
               <div className="mb-5 markdown text-md">
-                <ReactMarkdown>
-                  Introducing the iconic Air Jordan, the epitome of high-flying
-                  style and unbeatable performance. With its sleek design and
-                  advanced cushioning, this shoe is a slam dunk for any athlete.
-                  Take to the court with confidence and soar above the rest in
-                  the Air Jordan. Step up your sneaker game with the legendary
-                  Air Jordan. Its innovative design features a cushioned sole
-                  and breathable materials to keep you light on your feet. The
-                  iconic silhouette and classic colorways make it a must-have
-                  for any sneakerhead. Whether you're on the court or on the
-                  street, the Air Jordan will elevate your style and performance
-                  to new heights.
-                </ReactMarkdown>
+                <ReactMarkdown>{p.description}</ReactMarkdown>
               </div>
             </div>
           </div>
           {/* right column end */}
         </div>
 
-        {/* <RelatedProducts /> */}
+        {/* <RelatedProducts products={products} /> */}
       </Wrapper>
     </div>
   );

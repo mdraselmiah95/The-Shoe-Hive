@@ -3,7 +3,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import ProductCard from "./ProductCard";
 
-const RelatedProducts = () => {
+const RelatedProducts = ({ products }) => {
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
