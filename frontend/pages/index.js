@@ -4,18 +4,8 @@ import ProductCard from "@/components/ProductCard";
 import Wrapper from "@/components/Wrapper";
 import { fetchDataFromApi } from "@/utils/api";
 
-export default function Home() {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  const fetchProducts = async () => {
-    const { data } = await fetchDataFromApi("/api/products");
-    setData(data);
-  };
-
+export default function Home({ products }) {
+  console.log(products);
   return (
     <>
       <main>
@@ -37,13 +27,9 @@ export default function Home() {
           {/* products grid start */}
 
           <div className="grid grid-cols-1 gap-5 px-5 md:grid-cols-2 lg:grid-cols-3 my-14 md:px-0">
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
+            {products?.data?.map((product) => (
+              <ProductCard key={product?.id} data={product} />
+            ))}
           </div>
 
           {/* products grid end */}
@@ -53,4 +39,12 @@ export default function Home() {
   );
 }
 
-// video 2nd Part=> 01:51:00
+export async function getStaticProps() {
+  const products = await fetchDataFromApi("/api/products?populate=*");
+
+  return {
+    props: { products },
+  };
+}
+
+// video 2nd Part=> 01:15:00
