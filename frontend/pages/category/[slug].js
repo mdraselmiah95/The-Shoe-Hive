@@ -40,6 +40,32 @@ const Category = ({ category, products, slug }) => {
           </div>
         )}
         {/* products grid end */}
+
+        {/* PAGINATION BUTTONS START */}
+        {data?.meta?.pagination?.total > maxResult && (
+          <div className="flex items-center justify-center gap-3 my-16 md:my-0">
+            <button
+              className={`rounded py-2 px-4 bg-black text-white disabled:bg-gray-200 disabled:text-gray-500`}
+              disabled={pageIndex === 1}
+              onClick={() => setPageIndex(pageIndex - 1)}
+            >
+              Previous
+            </button>
+
+            <span className="font-bold">{`${pageIndex} of ${
+              data && data.meta.pagination.pageCount
+            }`}</span>
+
+            <button
+              className={`rounded py-2 px-4 bg-black text-white disabled:bg-gray-200 disabled:text-gray-500`}
+              disabled={pageIndex === (data && data.meta.pagination.pageCount)}
+              onClick={() => setPageIndex(pageIndex + 1)}
+            >
+              Next
+            </button>
+          </div>
+        )}
+        {/* PAGINATION BUTTONS END */}
       </Wrapper>
     </div>
   );
