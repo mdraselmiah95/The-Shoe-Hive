@@ -1,10 +1,25 @@
+import React, { useState } from "react";
+import useSWR from "swr";
+import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
 import ProductCard from "@/components/ProductCard";
 import Wrapper from "@/components/Wrapper";
 import { fetchDataFromApi } from "@/utils/api";
-import React from "react";
+
+const maxResult = 3;
 
 const Category = ({ category, products, slug }) => {
+  const [pageIndex, setPageIndex] = useState(1);
+  const { query } = useRouter();
+
+  const { data, error, isLoading } = useSWR(
+    `/api/products?populate=*&[filters][categories][slug][$eq]=${slug}&pagination[page]=${pageIndex}&pagination[pageSize]=${maxResult}`,
+    fetchDataFromApi,
+    {
+      fallbackData: products,
+    }
+  );
+
   return (
     <div className="relative w-full md:py-20">
       <Wrapper>
@@ -15,11 +30,11 @@ const Category = ({ category, products, slug }) => {
         </div>
 
         {/* products grid start */}
-        {!products.data ? (
+        {isLoading ? (
           <Loader />
         ) : (
           <div className="grid grid-cols-1 gap-5 px-5 md:grid-cols-2 lg:grid-cols-3 my-14 md:px-0">
-            {products?.data?.map((product) => (
+            {data?.data?.map((product) => (
               <ProductCard key={product?.id} data={product} />
             ))}
           </div>
@@ -50,7 +65,7 @@ export async function getStaticProps({ params: { slug } }) {
     `/api/categories?filters[slug][$eq]=${slug}`
   );
   const products = await fetchDataFromApi(
-    `/api/products?populate=*&[filters][categories][slug][$eq]=${slug}`
+    `/api/products?populate=*&[filters][categories][slug][$eq]=${slug}&pagination[page]=1&pagination[pageSize]=${maxResult}`
   );
 
   return {
