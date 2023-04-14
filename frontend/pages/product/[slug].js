@@ -1,19 +1,40 @@
 import ProductDetailsCarousel from "@/components/ProductDetailsCarousel";
 import { IoMdHeartEmpty } from "react-icons/io";
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ReactMarkdown from "react-markdown";
 import Wrapper from "@/components/Wrapper";
 import RelatedProducts from "@/components/RelatedProducts";
 import { fetchDataFromApi } from "@/utils/api";
 import Loader from "@/components/Loader";
 import { getDiscountedPricePercentage } from "@/utils/helper";
+import { addToCart } from "@/features/cart/cartSlice";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProductDetails = ({ product, products }) => {
   const [selectedSize, setSelectedSize] = useState();
   const [showError, setShowError] = useState(false);
+  const dispatch = useDispatch();
   const p = product?.data?.[0]?.attributes;
+
+  const notify = () => {
+    toast.success("Success. Check your cart! 💘", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
+
   return (
     <div className="w-full md:py-20">
+      <ToastContainer />
       <Wrapper>
         {!product?.data ? (
           <Loader />
@@ -110,6 +131,15 @@ const ProductDetails = ({ product, products }) => {
                     document
                       .getElementById("sizesGrid")
                       .scrollIntoView({ block: "center", behavior: "smooth" });
+                  } else {
+                    dispatch(
+                      addToCart({
+                        ...product?.data?.[0],
+                        selectedSize,
+                        oneQuantityPrice: p.price,
+                      })
+                    );
+                    notify();
                   }
                 }}
               >
