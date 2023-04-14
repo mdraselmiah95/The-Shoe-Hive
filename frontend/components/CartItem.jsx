@@ -1,9 +1,22 @@
 import Image from "next/image";
 import React from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { useDispatch } from "react-redux";
 
 const CartItem = ({ data }) => {
   const p = data.attributes;
+
+  const dispatch = useDispatch();
+
+  const updateCartItem = (e, key) => {
+    let payload = {
+      key,
+      val: key === "quantity" ? parseInt(e.target.value) : e.target.value,
+      id: data.id,
+    };
+    // dispatch(updateCart(payload));
+  };
+
   return (
     <div className="flex gap-3 py-5 border-b md:gap-5">
       {/* IMAGE START */}
@@ -45,7 +58,10 @@ const CartItem = ({ data }) => {
             <div className="flex items-center gap-1">
               <div className="font-semibold">Size:</div>
               <div className="relative">
-                <select className="py-2 pl-2 pr-8 text-base border border-gray-300 rounded appearance-none hover:text-black focus:outline-none focus:ring-2 focus:ring-neutral-200 focus:border-neutral-500">
+                <select
+                  className="py-2 pl-2 pr-8 text-base border border-gray-300 rounded appearance-none hover:text-black focus:outline-none focus:ring-2 focus:ring-neutral-200 focus:border-neutral-500"
+                  onChange={(e) => updateCartItem(e, "selectedSize")}
+                >
                   {p.size.data.map((item, i) => {
                     return (
                       <option
@@ -78,12 +94,17 @@ const CartItem = ({ data }) => {
             <div className="flex items-center gap-1">
               <div className="font-semibold">Quantity:</div>
               <div className="relative">
-                <select className="py-2 pl-2 pr-8 text-base border border-gray-300 rounded appearance-none hover:text-black focus:outline-none focus:ring-2 focus:ring-neutral-200 focus:border-neutral-500">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
+                <select
+                  className="py-2 pl-2 pr-8 text-base border border-gray-300 rounded appearance-none hover:text-black focus:outline-none focus:ring-2 focus:ring-neutral-200 focus:border-neutral-500"
+                  onChange={(e) => updateCartItem(e, "quantity")}
+                >
+                  {Array.from({ length: 10 }, (_, i) => i + 1).map((q, i) => {
+                    return (
+                      <option key={i} value={q} selected={data.quantity === q}>
+                        {q}
+                      </option>
+                    );
+                  })}
                 </select>
                 <span className="absolute top-0 right-0 flex items-center justify-center w-10 h-full text-center text-gray-600 pointer-events-none">
                   <svg
