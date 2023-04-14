@@ -50,4 +50,4 @@ export async function getStaticProps() {
   };
 }
 
-// video 2nd Part=> 03:15:00
+// video 2nd Part=> 04:28:00
