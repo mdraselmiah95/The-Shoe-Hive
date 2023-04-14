@@ -50,4 +50,4 @@ export async function getStaticProps() {
   };
 }
 
-// video 2nd Part=> 02:10:00 you are main
+// video 2nd Part=> 02:10:00
