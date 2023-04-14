@@ -102,7 +102,17 @@ const ProductDetails = ({ product, products }) => {
               {/* PRODUCT SIZE RANGE END */}
 
               {/* ADD TO CART BUTTON START */}
-              <button className="w-full py-4 mb-3 text-lg font-medium text-white transition-transform bg-black rounded-full active:scale-95 hover:opacity-75">
+              <button
+                className="w-full py-4 mb-3 text-lg font-medium text-white transition-transform bg-black rounded-full active:scale-95 hover:opacity-75"
+                onClick={() => {
+                  if (!selectedSize) {
+                    setShowError(true);
+                    document
+                      .getElementById("sizesGrid")
+                      .scrollIntoView({ block: "center", behavior: "smooth" });
+                  }
+                }}
+              >
                 Add to Cart
               </button>
               {/* ADD TO CART BUTTON END */}
@@ -125,7 +135,7 @@ const ProductDetails = ({ product, products }) => {
           </div>
         )}
 
-        {/* <RelatedProducts products={products} /> */}
+        <RelatedProducts products={products} />
       </Wrapper>
     </div>
   );
