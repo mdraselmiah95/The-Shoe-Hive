@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Wrapper from "@/components/Wrapper";
 import CartItem from "@/components/CartItem";
 import { useSelector } from "react-redux";
@@ -8,6 +8,10 @@ import { useSelector } from "react-redux";
 const Cart = () => {
   const [loading, setLoading] = useState(false);
   const { cartItems } = useSelector((state) => state.cart);
+
+  const subTotal = useMemo(() => {
+    return cartItems.reduce((total, val) => total + val.attributes.price, 0);
+  }, [cartItems]);
 
   return (
     <div className="w-full md:py-20">
@@ -44,7 +48,7 @@ const Cart = () => {
                       Subtotal
                     </div>
                     <div className="font-medium text-black text-md md:text-lg">
-                      &#2547;100
+                      &#2547;{subTotal}
                     </div>
                   </div>
                   <div className="py-5 mt-5 text-sm border-t md:text-md">

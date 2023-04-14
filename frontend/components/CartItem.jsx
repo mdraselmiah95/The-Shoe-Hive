@@ -1,3 +1,4 @@
+import { removeFromCart, updateCart } from "@/features/cart/cartSlice";
 import Image from "next/image";
 import React from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -5,8 +6,8 @@ import { useDispatch } from "react-redux";
 
 const CartItem = ({ data }) => {
   const p = data.attributes;
-
   const dispatch = useDispatch();
+  let selectedOptionId = 0;
 
   const updateCartItem = (e, key) => {
     let payload = {
@@ -14,7 +15,7 @@ const CartItem = ({ data }) => {
       val: key === "quantity" ? parseInt(e.target.value) : e.target.value,
       id: data.id,
     };
-    // dispatch(updateCart(payload));
+    dispatch(updateCart(payload));
   };
 
   return (
@@ -61,6 +62,7 @@ const CartItem = ({ data }) => {
                 <select
                   className="py-2 pl-2 pr-8 text-base border border-gray-300 rounded appearance-none hover:text-black focus:outline-none focus:ring-2 focus:ring-neutral-200 focus:border-neutral-500"
                   onChange={(e) => updateCartItem(e, "selectedSize")}
+                  defaultValue={selectedOptionId}
                 >
                   {p.size.data.map((item, i) => {
                     return (
@@ -97,6 +99,7 @@ const CartItem = ({ data }) => {
                 <select
                   className="py-2 pl-2 pr-8 text-base border border-gray-300 rounded appearance-none hover:text-black focus:outline-none focus:ring-2 focus:ring-neutral-200 focus:border-neutral-500"
                   onChange={(e) => updateCartItem(e, "quantity")}
+                  defaultValue={selectedOptionId}
                 >
                   {Array.from({ length: 10 }, (_, i) => i + 1).map((q, i) => {
                     return (
@@ -122,7 +125,10 @@ const CartItem = ({ data }) => {
               </div>
             </div>
           </div>
-          <RiDeleteBin6Line className="cursor-pointer text-black/[0.5] hover:text-black text-[16px] md:text-[20px]" />
+          <RiDeleteBin6Line
+            className="cursor-pointer text-black/[0.5] hover:text-black text-[16px] md:text-[20px]"
+            onClick={() => dispatch(removeFromCart({ id: data.id }))}
+          />
         </div>
       </div>
     </div>
