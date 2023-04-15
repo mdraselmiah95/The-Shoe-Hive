@@ -5,6 +5,11 @@ import Wrapper from "@/components/Wrapper";
 import CartItem from "@/components/CartItem";
 import { useSelector } from "react-redux";
 
+import { loadStripe } from "@stripe/stripe-js";
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+);
+
 const Cart = () => {
   const [loading, setLoading] = useState(false);
   const { cartItems } = useSelector((state) => state.cart);
@@ -12,6 +17,22 @@ const Cart = () => {
   const subTotal = useMemo(() => {
     return cartItems.reduce((total, val) => total + val.attributes.price, 0);
   }, [cartItems]);
+
+  const handlePayment = async () => {
+    try {
+      setLoading(true);
+      const stripe = await stripePromise;
+      const res = await makePaymentRequest("/api/orders", {
+        products: cartItems,
+      });
+      await stripe.redirectToCheckout({
+        sessionId: res.stripeSession.id,
+      });
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
 
   return (
     <div className="w-full md:py-20">
@@ -59,7 +80,10 @@ const Cart = () => {
                   </div>
                 </div>
                 {/* BUTTON START */}
-                <button className="flex items-center justify-center w-full gap-2 py-4 mb-3 text-lg font-medium text-white transition-transform bg-black rounded-full active:scale-95 hover:opacity-75">
+                <button
+                  className="flex items-center justify-center w-full gap-2 py-4 mb-3 text-lg font-medium text-white transition-transform bg-black rounded-full active:scale-95 hover:opacity-75"
+                  onClick={handlePayment}
+                >
                   Checkout
                 </button>
                 {/* BUTTON END */}
