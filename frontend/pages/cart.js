@@ -1,12 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
+import { AiOutlineClear } from "react-icons/ai";
 import Wrapper from "@/components/Wrapper";
 import CartItem from "@/components/CartItem";
 import { useDispatch, useSelector } from "react-redux";
 
 import { loadStripe } from "@stripe/stripe-js";
 import { makePaymentRequest } from "@/utils/api";
+import { clearCart } from "@/features/cart/cartSlice";
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 );
@@ -14,6 +16,7 @@ const stripePromise = loadStripe(
 const Cart = () => {
   const [loading, setLoading] = useState(false);
   const { cartItems } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
 
   const subTotal = useMemo(() => {
     return cartItems.reduce((total, val) => total + val.attributes.price, 0);
@@ -52,7 +55,16 @@ const Cart = () => {
             <div className="flex flex-col gap-12 py-10 lg:flex-row">
               {/* CART ITEMS START */}
               <div className="flex-[2]">
-                <div className="text-lg font-bold">Cart Items</div>
+                <div className="flex justify-between">
+                  <div className="text-lg font-bold">Cart Items</div>
+                  <button
+                    className="flex items-center justify-center text-lg font-semibold text-red-400"
+                    onClick={() => dispatch(clearCart())}
+                  >
+                    Clear Cart
+                    <AiOutlineClear />
+                  </button>
+                </div>
 
                 {cartItems.map((item) => (
                   <CartItem key={item.id} data={item} />
