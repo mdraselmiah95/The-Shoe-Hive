@@ -60,7 +60,7 @@ const CartItem = ({ data }) => {
               <div className="font-semibold">Size:</div>
               <div className="relative">
                 <select
-                  className="py-2 pl-2 pr-8 text-base border border-gray-300 rounded appearance-none hover:text-black focus:outline-none focus:ring-2 focus:ring-neutral-200 focus:border-neutral-500"
+                  className="py-1.5 pr-5 md:py-2 pl-2 md:pr-8 text-base border border-gray-300 rounded appearance-none hover:text-black focus:outline-none focus:ring-2 focus:ring-neutral-200 focus:border-neutral-500"
                   onChange={(e) => updateCartItem(e, "selectedSize")}
                   defaultValue={data.selectedSize}
                 >
@@ -97,7 +97,7 @@ const CartItem = ({ data }) => {
               <div className="font-semibold">Quantity:</div>
               <div className="relative">
                 <select
-                  className="py-2 pl-2 pr-8 text-base border border-gray-300 rounded appearance-none hover:text-black focus:outline-none focus:ring-2 focus:ring-neutral-200 focus:border-neutral-500"
+                  className="py-1.5 md:py-2 pl-2 pr-5 text-base border border-gray-300 rounded appearance-none md:pr-8 hover:text-black focus:outline-none focus:ring-2 focus:ring-neutral-200 focus:border-neutral-500"
                   onChange={(e) => updateCartItem(e, "quantity")}
                   defaultValue={data.quantity}
                 >
